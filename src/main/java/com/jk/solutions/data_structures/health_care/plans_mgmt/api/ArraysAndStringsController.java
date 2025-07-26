@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @RequestMapping("/api/dsa/arrays-strings")
 @RestController
 public class ArraysAndStringsController {
@@ -24,22 +25,9 @@ public class ArraysAndStringsController {
     private TwoPointerProductAnalyzer twoPointerProductAnalyzer;
 
     /**
-     * Sliding Window
-     * Use Case: Analyze maximum account-level plan purchase cost in any n-day sliding window.
-     *
-     * Key Features:
-     * Efficient stream-based implementation using JPA Stream<BigDecimal>.
-     * Deque used for window memory tracking.
-     * Micrometer @Timed + manual System.nanoTime() for benchmarking.
-     * API endpoint: /api/dsa/arrays-strings/sliding-window
-     * Synthetic data generator for realistic benchmark loads.
-     */
-
-    /**
      * Data Structure Algorithm: Arrays and Strings
      * Pattern: Sliding Window
      * Use Case: Analyze  purchase cost in moving time windows.
-     *
      * Endpoint to get maximum plan purchase cost in a sliding window for an account.
      * Example: /api/dsa/arrays-strings/sliding-window?accountNbr=ACC123&windowSize=7
      *
