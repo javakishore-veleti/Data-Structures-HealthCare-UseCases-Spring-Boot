@@ -65,5 +65,6 @@ public class SlidingWindowPlanAnalyzerImpl implements SlidingWindowPlanAnalyzer 
         LOGGER.info("Elapsed time in ms: {}" , (elapsed / 1_000_000));
 
         resp.addResult("maxSum", maxSum);
+        resp.setExecutionTimeMs(elapsed);
     }
 }
