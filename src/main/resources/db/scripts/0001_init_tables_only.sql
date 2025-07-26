@@ -326,3 +326,28 @@ CREATE TABLE dsa_healthcare_db.Account_Plan_Order_Line_History (
                                                                    is_deleted BOOLEAN,
                                                                    archived_at TIMESTAMP
 );
+
+CREATE TABLE dsa_healthcare_db.account_product_eligibility (
+                                             id VARCHAR(64) PRIMARY KEY,
+
+                                             account_number VARCHAR(64) NOT NULL,
+                                             product_id VARCHAR(64) NOT NULL,
+                                             product_feature_code VARCHAR(64),
+                                             plan_tier VARCHAR(32),
+                                             channel_type VARCHAR(32),
+                                             country_code VARCHAR(8),
+                                             county_code VARCHAR(16),
+
+                                             is_eligible BOOLEAN NOT NULL,
+                                             eligibility_reason VARCHAR(255),
+                                             last_evaluated_date DATE,
+                                             eligibility_version VARCHAR(32),
+
+                                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                             created_by VARCHAR(64),
+                                             updated_at TIMESTAMP,
+                                             updated_by VARCHAR(64),
+                                             is_deleted BOOLEAN DEFAULT FALSE,
+                                             status VARCHAR(32),
+                                             version INTEGER DEFAULT 0
+);

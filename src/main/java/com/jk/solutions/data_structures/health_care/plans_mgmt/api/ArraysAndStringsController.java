@@ -2,16 +2,14 @@ package com.jk.solutions.data_structures.health_care.plans_mgmt.api;
 
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.InPlaceEligibilityTransformer;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.PrefixSumPlanAnalyzer;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.SlidingWindowPlanAnalyzer;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.TwoPointerProductAnalyzer;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -28,6 +26,9 @@ public class ArraysAndStringsController {
 
     @Autowired
     private PrefixSumPlanAnalyzer prefixSumPlanAnalyzer;
+
+    @Autowired
+    private InPlaceEligibilityTransformer inPlaceEligibilityTransformer;
 
     /**
      * Data Structure Algorithm: Arrays and Strings
@@ -125,6 +126,20 @@ public class ArraysAndStringsController {
         DSAPatternResp resp = new DSAPatternResp();
         prefixSumPlanAnalyzer.analyzeCumulativeTotalCostRange(req, resp);
 
+        return ResponseEntity.ok(resp);
+    }
+
+    @PostMapping("/in-place/update-eligibility")
+    public ResponseEntity<DSAPatternResp> updateEligibilityInPlace(
+            @RequestParam("accountNbr") String accountNbr,
+            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
+
+        DSAPatternReq req = DSAPatternReq.builder()
+                .accountNbr(accountNbr).methodType(methodType)
+                .build();
+
+        DSAPatternResp resp = new DSAPatternResp();
+        inPlaceEligibilityTransformer.transformEligibilityInPlace(req, resp);
         return ResponseEntity.ok(resp);
     }
 }

@@ -1,6 +1,7 @@
 package com.jk.solutions.data_structures.health_care.plans_mgmt.api;
 
 import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.AccountPlanOrderDataSeeder;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.AccountProductEligibilityDataSeeder;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.ProductPriceDataSeeder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,10 @@ public class DataSeederController {
     @Autowired
     private AccountPlanOrderDataSeeder accountPlanOrderDataSeeder;
 
+    @Autowired
+    private AccountProductEligibilityDataSeeder eligibilityDataSeeder;
+
+
     @PostMapping("/product-prices")
     public ResponseEntity<String> seedProductPrices(@RequestParam(defaultValue = "1000") int count) {
         String result = productPriceDataSeeder.populateSyntheticProductPrices(count);
@@ -32,4 +37,19 @@ public class DataSeederController {
         String msg = accountPlanOrderDataSeeder.populateSyntheticAccountPlanOrders(accountNbr, count);
         return ResponseEntity.ok(msg);
     }
+
+    /**
+     * Generate synthetic account-product eligibility data.
+     * Example: /api/dsa/seed/account-product-eligibility?account=ACC123&count=100
+     */
+    @PostMapping("/account-product-eligibility")
+    public ResponseEntity<String> seedAccountProductEligibility(
+            @RequestParam(name = "account", defaultValue = "ACC123") String accountNumber,
+            @RequestParam(name = "count", defaultValue = "100") int count) {
+
+        String result = eligibilityDataSeeder.generateSyntheticEligibilityData(accountNumber, count);
+        return ResponseEntity.ok(result);
+    }
+
+
 }
