@@ -3,14 +3,13 @@ package com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.repository.AccountPlanOrderRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

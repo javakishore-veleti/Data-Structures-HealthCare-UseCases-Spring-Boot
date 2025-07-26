@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Stream;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Setter
 @Getter
 @Component
@@ -62,7 +62,7 @@ public class SlidingWindowPlanAnalyzerImpl implements SlidingWindowPlanAnalyzer 
         }
 
         long elapsed = System.nanoTime() - start;
-        LOGGER.info("Elapsed time in ms: " + (elapsed / 1_000_000));
+        LOGGER.info("Elapsed time in ms: {}" , (elapsed / 1_000_000));
 
         resp.addResult("maxSum", maxSum);
     }
