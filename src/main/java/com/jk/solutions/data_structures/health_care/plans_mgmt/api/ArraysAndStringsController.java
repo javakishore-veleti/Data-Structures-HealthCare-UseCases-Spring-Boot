@@ -24,12 +24,26 @@ public class ArraysAndStringsController {
     private TwoPointerProductAnalyzer twoPointerProductAnalyzer;
 
     /**
+     * Sliding Window
+     * Use Case: Analyze maximum account-level plan purchase cost in any n-day sliding window.
+     *
+     * Key Features:
+     * Efficient stream-based implementation using JPA Stream<BigDecimal>.
+     * Deque used for window memory tracking.
+     * Micrometer @Timed + manual System.nanoTime() for benchmarking.
+     * API endpoint: /api/dsa/arrays-strings/sliding-window
+     * Synthetic data generator for realistic benchmark loads.
+     */
+
+    /**
      * Data Structure Algorithm: Arrays and Strings
      * Pattern: Sliding Window
      * Use Case: Analyze  purchase cost in moving time windows.
      *
      * Endpoint to get maximum plan purchase cost in a sliding window for an account.
      * Example: /api/dsa/arrays-strings/sliding-window?accountNbr=ACC123&windowSize=7
+     *
+     *
      */
     @GetMapping("/sliding-window")
     public ResponseEntity<DSAPatternResp> getMaxSlidingWindowTotal(
@@ -62,7 +76,23 @@ public class ArraysAndStringsController {
         return ResponseEntity.ok("Inserted " + days + " synthetic orders for account: " + accountNbr);
     }
 
+    /*
+        Two Pointers (a.k.a. Two Indexes)
+        Use Case: Identify all product price pairs that sum within a user's budget.
 
+        Key Features:
+            Four algorithmic variants:
+                STANDARD
+                MEMORY_EFFICIENT
+                TIME_OPTIMIZED
+                DATABASE_OPTIMIZED
+
+        - Input via DSAPatternReq; output via DSAPatternResp.
+        - Custom ProductPriceProjection DTO for DB efficiency.
+        - Supports 50k+ product scale with defensive null checks.
+        - API endpoint: /api/dsa/arrays-strings/two-pointers/checkEligibleProductBundle
+        - Enum-based switching using AlgorithmMethodType.
+     */
 
     /**
      * Endpoint for Two Pointer pattern on ProductPrice.
