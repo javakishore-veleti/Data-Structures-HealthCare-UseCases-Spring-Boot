@@ -10,11 +10,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "AccountPlanOrder")
+@Table(name = "Account_Plan_Order")
 public class AccountPlanOrder extends BaseEntity {
 
     @Column(name = "order_id", nullable = false)
-    private Long orderId;
+    private String orderId;
 
     @Column(name = "account_number", nullable = false, length = 64)
     private String accountNumber;
