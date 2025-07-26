@@ -40,4 +40,16 @@ management:
     web:
       exposure:
         include: "*"
+  metrics:
+    enable:
+      all: true
+
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+
+
 

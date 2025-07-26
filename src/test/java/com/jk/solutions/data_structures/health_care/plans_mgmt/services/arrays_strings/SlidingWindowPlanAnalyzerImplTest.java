@@ -1,5 +1,7 @@
 package com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings;
 
+import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.repository.AccountPlanOrderRepository;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,10 +46,16 @@ class SlidingWindowPlanAnalyzerImplTest {
                 .streamOrderTotalCostsByAccountNumberOrderByCreatedAt(accountNumber))
                 .thenReturn(costs.stream());
 
-        BigDecimal result = slidingWindowPlanAnalyzer.getAccountPurchasesMaxCostInWindowWithJPAStreams(accountNumber, windowSize);
+        DSAPatternReq req = DSAPatternReq.builder()
+                .accountNbr(accountNumber)
+                .windowSize(windowSize)
+                .build();
+
+        DSAPatternResp response = new DSAPatternResp();
+        slidingWindowPlanAnalyzer.getAccountPurchasesMaxCostInWindowWithJPAStreams(req, response);
 
         // Expected max window: 200 + 150 + 50 = 400, or 150 + 50 + 400 = 600
-        assertEquals(new BigDecimal("600"), result);
+        assertEquals(new BigDecimal("600"), response.getResults().get("maxSum"));
     }
 
     @Test
@@ -64,8 +72,14 @@ class SlidingWindowPlanAnalyzerImplTest {
                 .streamOrderTotalCostsByAccountNumberOrderByCreatedAt(accountNumber))
                 .thenReturn(costs.stream());
 
-        BigDecimal result = slidingWindowPlanAnalyzer.getAccountPurchasesMaxCostInWindowWithJPAStreams(accountNumber, windowSize);
+        DSAPatternReq req = DSAPatternReq.builder()
+                .accountNbr(accountNumber)
+                .windowSize(windowSize)
+                .build();
 
-        assertEquals(BigDecimal.ZERO, result);
+        DSAPatternResp response = new DSAPatternResp();
+        slidingWindowPlanAnalyzer.getAccountPurchasesMaxCostInWindowWithJPAStreams(req, response);
+
+        assertEquals(BigDecimal.ZERO, response.getResults().get("maxSum"));
     }
 }

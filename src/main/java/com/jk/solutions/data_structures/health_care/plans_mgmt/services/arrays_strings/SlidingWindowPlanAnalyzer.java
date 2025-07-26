@@ -1,11 +1,9 @@
 package com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings;
 
-import java.math.BigDecimal;
-
+import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
 
 public interface SlidingWindowPlanAnalyzer {
 
-    BigDecimal getAccountPurchasesMaxCostInWindow(String accountId, int windowSizeInDays);
-
-    BigDecimal getAccountPurchasesMaxCostInWindowWithJPAStreams(String accountNbr, int windowSizeInDays);
+     void getAccountPurchasesMaxCostInWindowWithJPAStreams(DSAPatternReq req, DSAPatternResp resp) ;
 }
