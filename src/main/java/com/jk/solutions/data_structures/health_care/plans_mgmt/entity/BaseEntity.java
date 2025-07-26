@@ -39,4 +39,12 @@ public class BaseEntity {
     private Boolean isDeleted;
 
     // Getters and setters can be added as needed
+
+    public BaseEntity() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.createdBy = "BaseEntity";
+        this.updatedBy = "BaseEntity";
+        this.isDeleted = false;
+    }
 }

@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @Builder
-@Value
 public class DSAPatternReq {
 
     private String accountNbr;
@@ -16,5 +15,7 @@ public class DSAPatternReq {
     private double targetSum;
     private String methodType;
     private BigDecimal budget;
+    private int indexFrom;
+    private int indexTo;
 
 }

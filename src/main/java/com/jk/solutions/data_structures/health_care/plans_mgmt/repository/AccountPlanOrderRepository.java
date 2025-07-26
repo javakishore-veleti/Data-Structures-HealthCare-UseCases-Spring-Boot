@@ -1,12 +1,14 @@
 package com.jk.solutions.data_structures.health_care.plans_mgmt.repository;
 
 import com.jk.solutions.data_structures.health_care.plans_mgmt.entity.AccountPlanOrder;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -21,6 +23,10 @@ public interface AccountPlanOrderRepository extends JpaRepository<AccountPlanOrd
 
     @Query("SELECT o.orderTotalCost FROM AccountPlanOrder o WHERE o.accountNumber = :accountNumber ORDER BY o.createdAt")
     Stream<BigDecimal> streamOrderTotalCostsByAccountNumberOrderByCreatedAt(@Param("accountNumber") String accountNumber);
+
+    @Query("SELECT o.orderTotalCost FROM AccountPlanOrder o WHERE o.accountNumber = :accountNbr ORDER BY o.createdAt")
+    List<BigDecimal> findWindowedOrderTotals(@Param("accountNbr") String accountNbr, Pageable pageable);
+
 
 
 }
