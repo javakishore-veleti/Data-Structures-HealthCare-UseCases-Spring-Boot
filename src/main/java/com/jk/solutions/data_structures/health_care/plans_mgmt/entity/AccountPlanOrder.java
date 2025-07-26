@@ -22,7 +22,7 @@ public class AccountPlanOrder extends BaseEntity {
     private String accountNumber;
 
     @Column(name = "plan_id", nullable = false)
-    private Long planId;
+    private String planId;
 
     @Column(name = "order_lines_count", nullable = false)
     private Integer orderLinesCount;

@@ -18,10 +18,10 @@ public class BaseEntity {
     private String id;
 
     @Column(name = "status", nullable = false, length = 32)
-    private String status;
+    private String status = "A";
 
     @Column(name = "version", nullable = false)
-    private Integer version;
+    private Integer version = 1;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

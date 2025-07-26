@@ -14,6 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class DSAPatternResp {
 
+    private String dataStructureAlgorithmName;
     private String patternName;
     private Map<String, Object> inputParameters;
     private Object result;

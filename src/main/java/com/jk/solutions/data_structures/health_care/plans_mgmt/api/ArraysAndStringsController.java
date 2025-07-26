@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RequestMapping("/api/dsa/arrays-strings")
 @RestController
 public class ArraysAndStringsController {
@@ -32,7 +34,23 @@ public class ArraysAndStringsController {
                 .build();
 
         DSAPatternResp response = new DSAPatternResp();
+        response.setDataStructureAlgorithmName("Arrays-Strings");
+        response.setPatternName("Sliding-Window");
         slidingWindowPlanAnalyzer.getAccountPurchasesMaxCostInWindowWithJPAStreams(req, response);
         return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Endpoint to populate synthetic orders for testing.
+     * Example: /api/dsa/arrays-strings/sliding-window/populate?accountNbr=ACC123&days=30&amount=100
+     */
+    @GetMapping("/sliding-window/populate")
+    public ResponseEntity<String> populateSlidingWindowData(
+            @RequestParam("accountNbr") String accountNbr,
+            @RequestParam("days") int days,
+            @RequestParam("amount") BigDecimal baseAmount) {
+
+        slidingWindowPlanAnalyzer.populateSyntheticOrders(accountNbr, days, baseAmount);
+        return ResponseEntity.ok("Inserted " + days + " synthetic orders for account: " + accountNbr);
     }
 }

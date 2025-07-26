@@ -2,6 +2,7 @@ package com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_
 
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.entity.AccountPlanOrder;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.repository.AccountPlanOrderRepository;
 import io.micrometer.core.annotation.Timed;
 import lombok.Getter;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Iterator;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Stream;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -66,5 +67,41 @@ public class SlidingWindowPlanAnalyzerImpl implements SlidingWindowPlanAnalyzer 
 
         resp.addResult("maxSum", maxSum);
         resp.setExecutionTimeMs(elapsed);
+    }
+
+    @Override
+    @Transactional
+    public void populateSyntheticOrders(String accountNbr, int days, BigDecimal baseAmount) {
+        List<AccountPlanOrder> orders = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        Random random = new Random();
+
+        for (int i = 0; i < days; i++) {
+            // Randomize base amount ±20% variance
+            BigDecimal randomAmount = baseAmount
+                    .multiply(BigDecimal.valueOf(0.8 + (0.4 * random.nextDouble())))
+                    .setScale(2, RoundingMode.HALF_UP);
+
+            AccountPlanOrder order = new AccountPlanOrder();
+            order.setId(UUID.randomUUID().toString());
+            order.setOrderId(order.getId());
+            order.setAccountNumber(accountNbr);
+            order.setPlanId(UUID.randomUUID().toString());
+            order.setOrderLinesCount(1);
+            order.setOrderCost(randomAmount);
+            order.setOrderDiscount(BigDecimal.ZERO);
+            order.setOrderTotalCost(randomAmount);
+            order.setOrderStatus("COMPLETED");
+            order.setOrderFulfilledDate(today.minusDays(i));
+            order.setCreatedAt(today.minusDays(i).atStartOfDay());
+            order.setCreatedBy("SYNTHETIC");
+            order.setUpdatedAt(today.minusDays(i).atStartOfDay());
+            order.setUpdatedBy("SYNTHETIC");
+            order.setIsDeleted(false);
+
+            orders.add(order);
+        }
+
+        accountPlanOrderRepository.saveAll(orders);
     }
 }

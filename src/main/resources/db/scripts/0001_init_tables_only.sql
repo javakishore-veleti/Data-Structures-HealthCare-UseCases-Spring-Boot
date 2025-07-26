@@ -2,7 +2,8 @@
 -- Main Table: dsa_healthcare_db.Product
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product (
-                                           product_id VARCHAR(64) PRIMARY KEY,
+                                           id  VARCHAR(64) PRIMARY KEY,
+                                           product_id VARCHAR(64) ,
                                            name VARCHAR(100),
                                            description TEXT,
                                            status VARCHAR(20) DEFAULT 'ACTIVE',
@@ -18,8 +19,9 @@ CREATE TABLE dsa_healthcare_db.Product (
 -- History Table: dsa_healthcare_db.Product_History
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product_History (
-                                                   history_id BIGINT PRIMARY KEY,
-                                                   product_id VARCHAR(64),
+                                                   history_id VARCHAR(64)  PRIMARY KEY,
+                                                   id  VARCHAR(64) ,
+                                                    product_id VARCHAR(64),
                                                    name VARCHAR(100),
                                                    description TEXT,
                                                    status VARCHAR(20),
@@ -36,7 +38,8 @@ CREATE TABLE dsa_healthcare_db.Product_History (
 -- Main Table: dsa_healthcare_db.Product_Feature
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product_Feature (
-                                                   feature_id VARCHAR(64) PRIMARY KEY,
+                                                   id VARCHAR(64) PRIMARY KEY,
+                                                   feature_id VARCHAR(64) ,
                                                    product_id VARCHAR(64),
                                                    feature_name VARCHAR(100),
                                                    feature_description TEXT,
@@ -72,7 +75,8 @@ CREATE TABLE dsa_healthcare_db.Product_Feature_History (
 -- Main Table: dsa_healthcare_db.Product_Price
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product_Price (
-                                                 price_id VARCHAR(64) PRIMARY KEY,
+                                                 id VARCHAR(64) PRIMARY KEY,
+                                                 price_id VARCHAR(64),
                                                  product_id VARCHAR(64),
                                                  price_amount DECIMAL(10,2),
                                                  currency VARCHAR(10),
@@ -126,6 +130,7 @@ CREATE TABLE dsa_healthcare_db.Product_Discount (
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product_Discount_History (
                                                             history_id BIGINT PRIMARY KEY,
+                                                            id VARCHAR(64),
                                                             discount_id VARCHAR(64),
                                                             product_id VARCHAR(64),
                                                             discount_amount DECIMAL(10,2),
@@ -144,7 +149,8 @@ CREATE TABLE dsa_healthcare_db.Product_Discount_History (
 -- Main Table: dsa_healthcare_db.Product_Qualification
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product_Qualification (
-                                                         qualification_id VARCHAR(64) PRIMARY KEY,
+                                                         id VARCHAR(64) PRIMARY KEY,
+                                                         qualification_id VARCHAR(64),
                                                          product_id VARCHAR(64),
                                                          country VARCHAR(50),
                                                          county VARCHAR(50),
@@ -163,6 +169,7 @@ CREATE TABLE dsa_healthcare_db.Product_Qualification (
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Product_Qualification_History (
                                                                  history_id BIGINT PRIMARY KEY,
+                                                                 id VARCHAR(64),
                                                                  qualification_id VARCHAR(64),
                                                                  product_id VARCHAR(64),
                                                                  country VARCHAR(50),
@@ -182,7 +189,8 @@ CREATE TABLE dsa_healthcare_db.Product_Qualification_History (
 -- Main Table: dsa_healthcare_db.Account_Plans
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Account_Plans (
-                                                 account_number VARCHAR(50) PRIMARY KEY,
+                                                 id  VARCHAR(64) PRIMARY KEY,
+                                                 account_number VARCHAR(50) ,
                                                  plan_id VARCHAR(64),
                                                  purchased_date DATE,
                                                  closed_date DATE,
@@ -200,7 +208,8 @@ CREATE TABLE dsa_healthcare_db.Account_Plans (
 -- History Table: dsa_healthcare_db.Account_Plans_History
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Account_Plans_History (
-                                                         history_id BIGINT PRIMARY KEY,
+                                                         id  VARCHAR(64) ,
+                                                         history_id VARCHAR(64) PRIMARY KEY,
                                                          account_number VARCHAR(50),
                                                          plan_id VARCHAR(64),
                                                          purchased_date DATE,
@@ -220,7 +229,8 @@ CREATE TABLE dsa_healthcare_db.Account_Plans_History (
 -- Main Table: dsa_healthcare_db.Account_Plan_Order
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Account_Plan_Order (
-                                                      order_id VARCHAR(64) PRIMARY KEY,
+                                                    id  VARCHAR(64) PRIMARY KEY,
+                                                      order_id VARCHAR(64) ,
                                                       account_number VARCHAR(50),
                                                       plan_id VARCHAR(64),
                                                       order_lines_count INT,
@@ -244,7 +254,8 @@ CREATE TABLE dsa_healthcare_db.Account_Plan_Order (
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Account_Plan_Order_History (
                                                               history_id BIGINT PRIMARY KEY,
-                                                              order_id VARCHAR(64),
+                                                              id  VARCHAR(64),
+                                                                  order_id VARCHAR(64),
                                                               account_number VARCHAR(50),
                                                               plan_id VARCHAR(64),
                                                               order_lines_count INT,
@@ -268,7 +279,8 @@ CREATE TABLE dsa_healthcare_db.Account_Plan_Order_History (
 -- Main Table: dsa_healthcare_db.Account_Plan_Order_Line
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Account_Plan_Order_Line (
-                                                           order_line_id VARCHAR(64) PRIMARY KEY,
+                                                           id  VARCHAR(64) PRIMARY KEY ,
+                                                           order_line_id VARCHAR(64),
                                                            order_id VARCHAR(64),
                                                            product_id VARCHAR(64),
                                                            quantity INT,
@@ -293,6 +305,7 @@ CREATE TABLE dsa_healthcare_db.Account_Plan_Order_Line (
 -- ====================================================
 CREATE TABLE dsa_healthcare_db.Account_Plan_Order_Line_History (
                                                                    history_id BIGINT PRIMARY KEY,
+                                                                   id BIGINT,
                                                                    order_line_id VARCHAR(64),
                                                                    order_id VARCHAR(64),
                                                                    product_id VARCHAR(64),
