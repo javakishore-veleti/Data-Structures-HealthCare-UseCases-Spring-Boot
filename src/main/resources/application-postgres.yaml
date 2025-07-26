@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile: postgres
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=dsa_healthcare_db
+    driver-class-name: org.postgresql.Driver
+    username: dsa_healthcare_db
+    password: dsa_healthcare_db
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        default_schema: dsa_healthcare_db
+

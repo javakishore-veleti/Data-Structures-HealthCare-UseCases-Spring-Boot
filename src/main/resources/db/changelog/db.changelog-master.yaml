@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0000-schema
+      author: jk_solutions
+      changes:
+        - sqlFile:
+            path: ../scripts/0000_init_schema.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            endDelimiter: ;
+  - changeSet:
+      id: 0001-tables
+      author: jk_solutions
+      changes:
+        - sqlFile:
+            path: ../scripts/0001_init_tables_only.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            endDelimiter: ;
+
+  # Postgres triggers
+  - changeSet:
+      id: 0003-triggers-postgres
+      author: jk_solutions
+      preConditions:
+        - onFail: MARK_RAN
+        - onFailMessage: "Skipping Postgres-specific triggers on non-Postgres DB"
+        - dbms:
+            type: postgresql
+      changes:
+        - sqlFile:
+            path: ../scripts/postgres/0001_schema_triggers_postgres.sql
+            relativeToChangelogFile: true
+
+  # Oracle triggers
+  - changeSet:
+      id: 0004-triggers-oracle
+      author: jk_solutions
+      preConditions:
+        - onFail: MARK_RAN
+        - onFailMessage: "Skipping Oracle-specific triggers on non-Postgres DB"
+        - dbms:
+            type: oracle
+      changes:
+        - sqlFile:
+            path: ../scripts/oracle/0001_schema_triggers_oracle.sql
+            relativeToChangelogFile: true
+
+  # SQL Server triggers
+  - changeSet:
+      id: 0005-triggers-sqlserver
+      author: jk_solutions
+      preConditions:
+        - onFail: MARK_RAN
+        - onFailMessage: "Skipping Oracle-specific triggers on non-Postgres DB"
+        - dbms:
+            type: mssql
+      changes:
+        - sqlFile:
+            path: ../scripts/sqlserver/0001_schema_triggers_sqlserver.sql
+            relativeToChangelogFile: true
