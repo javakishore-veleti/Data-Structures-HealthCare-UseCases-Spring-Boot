@@ -19,6 +19,7 @@ public class DSAPatternResp {
     private Map<String, Object> inputParameters;
     private Object result;
     private long executionTimeMs;
+    private String message;
 
     private Map<String, Object> results;
 

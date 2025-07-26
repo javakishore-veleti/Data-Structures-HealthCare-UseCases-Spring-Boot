@@ -14,15 +14,12 @@ import java.math.BigDecimal;
 @Table(name = "ProductPrice")
 public class ProductPrice extends BaseEntity {
 
-    @Column(name = "price_id", nullable = false)
-    private Long priceId;
-
     @Column(name = "product_id", nullable = false)
-    private Long productId;
+    private String productId;
 
-    @Column(name = "price_amount", precision = 15, scale = 2)
+    @Column(name = "price_amount",nullable = false)
     private BigDecimal priceAmount;
 
-    @Column(name = "currency", length = 10)
+    @Column(name = "currency")
     private String currency;
 }

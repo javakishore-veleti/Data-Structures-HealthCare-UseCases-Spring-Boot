@@ -3,6 +3,7 @@ package com.jk.solutions.data_structures.health_care.plans_mgmt.api;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.SlidingWindowPlanAnalyzer;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.services.arrays_strings.TwoPointerProductAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,14 @@ public class ArraysAndStringsController {
     @Autowired
     private SlidingWindowPlanAnalyzer slidingWindowPlanAnalyzer;
 
+    @Autowired
+    private TwoPointerProductAnalyzer twoPointerProductAnalyzer;
+
     /**
+     * Data Structure Algorithm: Arrays and Strings
+     * Pattern: Sliding Window
+     * Use Case: Analyze  purchase cost in moving time windows.
+     *
      * Endpoint to get maximum plan purchase cost in a sliding window for an account.
      * Example: /api/dsa/arrays-strings/sliding-window?accountNbr=ACC123&windowSize=7
      */
@@ -52,5 +60,27 @@ public class ArraysAndStringsController {
 
         slidingWindowPlanAnalyzer.populateSyntheticOrders(accountNbr, days, baseAmount);
         return ResponseEntity.ok("Inserted " + days + " synthetic orders for account: " + accountNbr);
+    }
+
+
+
+    /**
+     * Endpoint for Two Pointer pattern on ProductPrice.
+     * Example: /api/dsa/arrays-strings/two-pointers?targetSum=120
+     */
+    @GetMapping("/two-pointers/checkEligibleProductBundle")
+    public ResponseEntity<DSAPatternResp> checkEligibleProductBundle(
+            @RequestParam("targetSum") double budget,
+            @RequestParam(name = "method", required = false, defaultValue = "memory") String methodType) {
+
+        DSAPatternReq req = DSAPatternReq.builder()
+                .methodType(methodType)
+                .budget(BigDecimal.valueOf(budget))
+                .build();
+
+        DSAPatternResp resp = new DSAPatternResp();
+        twoPointerProductAnalyzer.checkEligibleProductBundleWithinBudget(req, resp);
+
+        return ResponseEntity.ok(resp);
     }
 }
