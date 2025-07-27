@@ -52,4 +52,7 @@ public interface ProductFeatureDependencyRepository extends JpaRepository<Produc
     """, nativeQuery = true)
     List<Object[]> findTopologicallySortedFeaturesWithDepth(@Param("productId") String productId);
 
+    @Query("SELECT pfd.productId, pfd.dependentFeatureCode FROM ProductFeatureDependency pfd")
+    List<Object[]> findAllProductFeatureEdges();
+
 }

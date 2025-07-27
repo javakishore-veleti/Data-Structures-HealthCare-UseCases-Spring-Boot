@@ -3,6 +3,7 @@ package com.jk.solutions.data_structures.health_care.plans_mgmt.services.graphs;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.common.AlgorithmMethodType;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternReq;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.DSAPatternResp;
+import com.jk.solutions.data_structures.health_care.plans_mgmt.dtos.UnionFind;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.entity.ProductFeatureDependency;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.repository.ProductFeatureDependencyRepository;
 import org.apache.commons.lang3.ObjectUtils;
@@ -277,9 +278,93 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
 
     }
 
+    /*
+    Use Case: Cluster related plans with shared qualifications (e.g., features or eligibility rules) to identify isolated or core offerings.
+    Algorithm: Union-Find (Disjoint Set Union – DSU)
+
+    What Are We Solving?
+    - You want to group plans or features that are transitively connected via shared qualifications or feature dependencies.
+    - For example:
+        - PlanA shares a feature with PlanB, and PlanB shares a feature with PlanC → so all 3 belong to the same cluster.
+
+     */
     @Override
     public void clusterPlansUnionFind(DSAPatternReq req, DSAPatternResp resp) {
 
+        List<Object[]> edges = repository.findAllProductFeatureEdges();
+
+        if (edges.isEmpty()) {
+            resp.setMessage("No feature dependencies found.");
+            return;
+        }
+
+        // Step 1: Initialize Union-Find structure
+        UnionFind uf = new UnionFind();
+
+        // iterating over the list of edges fetched from the database.
+        for (Object[] edge : edges) {
+            // Each edge is a pair of values:
+            // These represent a connection between a product and a feature.
+
+            // This is the product ID (e.g., "EC2", "Lambda").
+            String product = (String) edge[0];
+
+            // This is the feature code (e.g., "Auto-scaling", "Subsecond billing").
+            String feature = (String) edge[1];
+
+            // This is the key step where we're saying:
+            // This product and this feature are connected, so they should belong to the same cluster.
+            /*
+            The UnionFind data structure:
+            - Maintains disjoint sets of connected elements.
+            - Efficiently merges two sets using union().
+            - Internally maps every item to a representative (root).
+            - Uses path compression to keep things fast.
+
+            Conceptual Analogy:
+                Imagine products and features are dots,
+                and every call to union(product, feature) is drawing a line connecting them.
+
+                After processing all edges, connected components form naturally — that’s your cluster.
+             */
+            uf.union(product, feature); // Link product to feature
+        }
+
+        // After this loop, all related products and features are logically grouped. Later, we extract clusters like:
+
+        // Step 2: Build clusters by root
+        Map<String, List<String>> clusters = new HashMap<>();
+        for (String node : uf.getAllNodes()) {
+            String root = uf.find(node);
+            clusters.computeIfAbsent(root, k -> new ArrayList<>()).add(node);
+        }
+        // This groups all nodes under their cluster representative (root).
+
+        resp.setMessage("Clustered plans using Union-Find");
+        resp.setResult(clusters);
+
+        /*
+        What The Output Represents
+        - Each key in the JSON map is a representative root node of a cluster, typically the first node encountered in
+        a group of interconnected elements (AWS services + features).
+
+        - Each value list is a cluster — a group of related product features and services that are transitively
+        connected, meaning there is at least one path between them via the union operations you performed.
+
+        This structure is ideal for:
+        - Identifying product modules or families
+        - Analyzing eligibility clusters in healthcare
+        - Detecting feature propagation logic
+
+        How This Helps in Real Business Use Cases
+        - For Healthcare Eligibility:
+        -   Each cluster might represent all features a user gets access to once they qualify for a particular product or feature.
+        -   You can track eligibility propagation in in-place operations or visualize feature graphs.
+
+        - For AWS Platform Design:
+        -   You now know what core features are tightly coupled.
+        -   This can drive pricing packages, bundling strategies, or even microservices grouping.
+         */
     }
 
     @Override
