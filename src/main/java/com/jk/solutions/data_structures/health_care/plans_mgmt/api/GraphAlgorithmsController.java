@@ -90,14 +90,15 @@ public class GraphAlgorithmsController {
      */
     @GetMapping("/plan-upgrade-paths")
     public ResponseEntity<DSAPatternResp> getPlanUpgradePaths(
-            @RequestParam("accountNbr") String accountNbr,
-            @RequestParam("currentPlan") String currentPlan,
+            @RequestParam(value = "currentPlan", defaultValue = "Serverless computing") String currentPlan,
+            @RequestParam(name = "productId", defaultValue = "Lambda") String productId, // Needed to identify graph scope
             @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
 
+        // Build a single flexible DTO as you've been doing throughout
         DSAPatternReq req = DSAPatternReq.builder()
-                .accountNbr(accountNbr)
+                .currentPlan(currentPlan)   // Add this field to DSAPatternReq if not yet present
+                .productId(productId)       // Needed to fetch edges
                 .methodType(methodType)
-                .currentPlan(currentPlan)
                 .build();
 
         DSAPatternResp resp = new DSAPatternResp();

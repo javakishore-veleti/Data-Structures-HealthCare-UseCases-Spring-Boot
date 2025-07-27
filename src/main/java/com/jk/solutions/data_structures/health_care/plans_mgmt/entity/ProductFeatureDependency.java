@@ -22,9 +22,13 @@ public class ProductFeatureDependency extends BaseEntity {
     @Column(name = "product_id", nullable = false)
     private String productId;
 
-    public ProductFeatureDependency(String productId, String fromFeature, String toFeature) {
+    @Column(name = "dependency_weight")
+    private Integer dependencyWeight; // e.g., 1 to 100 (priority, effort, etc.)
+
+    public ProductFeatureDependency(String productId, String fromFeature, String toFeature, Integer dependencyWeight) {
         this.productId = productId;
         this.sourceFeatureCode = fromFeature;
         this.dependentFeatureCode = toFeature;
+        this.dependencyWeight = dependencyWeight;
     }
 }

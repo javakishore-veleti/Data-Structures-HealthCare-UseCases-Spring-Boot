@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SuppressWarnings({"unused", "SpringJavaAutowiredFieldsWarningInspection"})
@@ -423,6 +424,93 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
 
     @Override
     public void computeUpgradePaths(DSAPatternReq req, DSAPatternResp resp) {
+        String productId = req.getProductId();
+        String start = req.getCurrentPlan(); // or req.getStartFeature()
 
+        List<ProductFeatureDependency> edges = repository.findByProductId(productId);
+
+        if (ObjectUtils.isEmpty(edges)) {
+            resp.setMessage("No upgrade dependency data found for productId: " + productId);
+            return;
+        }
+
+        Map<String, List<String>> adjList = new HashMap<>();
+        for (ProductFeatureDependency edge : edges) {
+            adjList.computeIfAbsent(edge.getSourceFeatureCode(), k -> new ArrayList<>())
+                    .add(edge.getDependentFeatureCode());
+        }
+
+        int maxDepth = req.getMaxDepth() > 0 ? req.getMaxDepth() : Integer.MAX_VALUE;
+        boolean excludeCycles = req.isExcludeCycles();
+
+        List<List<String>> allPaths = new ArrayList<>();
+        dfsAllUpgradePaths(start, adjList, new ArrayList<>(), allPaths, new HashSet<>(), excludeCycles, 0, maxDepth);
+
+        resp.setMessage("Upgrade paths from " + start + (excludeCycles ? " (no cycles)" : "") +
+                (maxDepth != Integer.MAX_VALUE ? ", maxDepth=" + maxDepth : ""));
+        resp.setResult(allPaths);
     }
+
+    @SuppressWarnings("SequencedCollectionMethodCanBeUsed")
+    private void dfsAllUpgradePaths(
+            String current,
+            Map<String, List<String>> graph,
+            List<String> path,
+            List<List<String>> allPaths,
+            Set<String> visited,
+            boolean excludeCycles,
+            int depth,
+            int maxDepth) {
+
+        if (depth > maxDepth) return;
+
+        path.add(current);
+        if (excludeCycles) visited.add(current);
+
+        List<String> neighbors = graph.getOrDefault(current, Collections.emptyList());
+        if (neighbors.isEmpty()) {
+            allPaths.add(new ArrayList<>(path));
+        } else {
+            for (String neighbor : neighbors) {
+                if (!excludeCycles || !visited.contains(neighbor)) {
+                    dfsAllUpgradePaths(neighbor, graph, path, allPaths, visited, excludeCycles, depth + 1, maxDepth);
+                }
+            }
+        }
+
+        path.remove(path.size() - 1);
+        if (excludeCycles) visited.remove(current);
+    }
+
+
+
+    @SuppressWarnings("SequencedCollectionMethodCanBeUsed")
+    private void bfsAllUpgradePaths(
+            String start,
+            Map<String, List<String>> adjList,
+            List<List<String>> allPaths
+    ) {
+        Queue<List<String>> queue = new ArrayDeque<>();
+        queue.add(List.of(start));
+
+        while (!queue.isEmpty()) {
+            List<String> path = queue.poll();
+            String last = path.get(path.size() - 1);
+
+            List<String> neighbors = adjList.getOrDefault(last, List.of());
+
+            if (neighbors.isEmpty()) {
+                allPaths.add(path);
+            } else {
+                for (String neighbor : neighbors) {
+                    if (!path.contains(neighbor)) { // Avoid cycles
+                        List<String> newPath = new ArrayList<>(path);
+                        newPath.add(neighbor);
+                        queue.add(newPath);
+                    }
+                }
+            }
+        }
+    }
+
 }

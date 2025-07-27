@@ -20,4 +20,10 @@ public class DSAPatternReq {
     private int indexFrom;
     private int indexTo;
 
+    private int maxDepth;              // For DFS/BFS depth-limiting or cutoff
+    private boolean excludeCycles;     // Prevent revisits or loops or ignore paths that revisit nodes
+
+    private boolean useWeights;        // whether to consider weights
+    private int weightThreshold;       // only allow traversals below this threshold
+
 }

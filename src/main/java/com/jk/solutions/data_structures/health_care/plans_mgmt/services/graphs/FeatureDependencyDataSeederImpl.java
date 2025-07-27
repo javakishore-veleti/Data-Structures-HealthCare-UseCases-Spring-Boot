@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class FeatureDependencyDataSeederImpl implements FeatureDependencyDataSeeder {
@@ -64,7 +65,8 @@ public class FeatureDependencyDataSeederImpl implements FeatureDependencyDataSee
 
                     String edgeKey = source + "->" + target;
                     if (!seenEdges.contains(edgeKey)) {
-                        dependencies.add(new ProductFeatureDependency(productId, source, target));
+                        dependencies.add(new ProductFeatureDependency(productId, source, target,
+                                ThreadLocalRandom.current().nextInt(1, 101))); // weight between 1–100));
                         seenEdges.add(edgeKey); // track added edge
                     }
                 }
