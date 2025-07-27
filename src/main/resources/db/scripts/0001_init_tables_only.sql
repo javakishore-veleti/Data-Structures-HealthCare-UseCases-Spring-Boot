@@ -351,3 +351,17 @@ CREATE TABLE dsa_healthcare_db.account_product_eligibility (
                                              status VARCHAR(32),
                                              version INTEGER DEFAULT 0
 );
+
+CREATE TABLE dsa_healthcare_db.product_feature_dependency (
+                                            id VARCHAR(64) PRIMARY KEY,
+                                            product_id VARCHAR(100) NOT NULL,
+                                            source_feature_code VARCHAR(100) NOT NULL,
+                                            dependent_feature_code VARCHAR(100) NOT NULL,
+                                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                            created_by VARCHAR(100),
+                                            updated_by VARCHAR(100),
+                                            version INT DEFAULT 1,
+                                            status VARCHAR(32),
+                                            is_deleted BOOLEAN DEFAULT FALSE
+);
