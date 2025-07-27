@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 @SuppressWarnings({"unused", "SpringJavaAutowiredFieldsWarningInspection"})
 @Component
@@ -127,19 +128,81 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
      * MEMORY_EFFICIENT: Stream and reduce edges incrementally.
      */
     private void topologicalSortMemoryOptimized(DSAPatternReq req, DSAPatternResp resp) {
-        // Delegating to standard for now – future: stream through large edge sets
-        topologicalSortStandard(req, resp);
-        resp.setMessage("Memory-efficient topological sort (delegated)");
+        String productId = req.getProductId();
+
+        Map<String, Integer> inDegree = new HashMap<>();
+        Map<String, List<String>> adjList = new HashMap<>();
+
+        try (Stream<ProductFeatureDependency> edgeStream = repository.streamDependenciesByProductId(productId)) {
+
+
+            edgeStream.forEach(edge -> {
+                String from = edge.getSourceFeatureCode();
+                String to = edge.getDependentFeatureCode();
+
+                adjList.computeIfAbsent(from, k -> new ArrayList<>()).add(to);
+                inDegree.put(to, inDegree.getOrDefault(to, 0) + 1);
+                inDegree.putIfAbsent(from, 0);
+            });
+
+            Queue<String> queue = new ArrayDeque<>();
+            for (Map.Entry<String, Integer> entry : inDegree.entrySet()) {
+                if (entry.getValue() == 0) queue.add(entry.getKey());
+            }
+
+            List<String> result = new ArrayList<>();
+            while (!queue.isEmpty()) {
+                String feature = queue.poll();
+                result.add(feature);
+                for (String neighbor : adjList.getOrDefault(feature, List.of())) {
+                    inDegree.put(neighbor, inDegree.get(neighbor) - 1);
+                    if (inDegree.get(neighbor) == 0) queue.add(neighbor);
+                }
+            }
+
+            if (result.size() != inDegree.size()) {
+                resp.setMessage("Cycle detected (streamed)");
+            } else {
+                resp.setMessage("Topological sort completed with memory optimization");
+                resp.setResult(result);
+            }
+
+        } catch (Exception ex) {
+            resp.setMessage("Error during memory-optimized sort: " + ex.getMessage());
+        }
+
+        resp.addResult("adjList", adjList);
+        resp.addResult("inDegree", inDegree);
     }
 
     /**
      * DATABASE_OPTIMIZED: Placeholder – recommend native recursive CTE in production
      */
     private void topologicalSortDbDriven(DSAPatternReq req, DSAPatternResp resp) {
-        resp.setMessage("Topological sort via DB not implemented – recommend recursive CTE or graph DB");
-        resp.setResult(List.of());
-    }
+        String productId = req.getProductId();
 
+        try {
+
+            List<Object[]> rows = repository.findTopologicallySortedFeaturesWithDepth(productId);
+            List<String> sortedFeatures = rows.stream()
+                    .map(row -> (String) row[0])
+                    .distinct()
+                    .toList();
+
+            if (sortedFeatures.isEmpty()) {
+                resp.setMessage("No dependencies found or possible cycle detected.");
+            } else {
+                resp.setResult(sortedFeatures);
+                resp.setMessage("Topological sort completed via database recursive CTE.");
+            }
+
+            resp.addResult("sortedFeatures", sortedFeatures);
+
+        } catch (Exception e) {
+            resp.setMessage("Error during DB-driven topological sort: " + e.getMessage());
+            resp.setResult(Collections.emptyList());
+        }
+    }
 
     /*
     Business Purpose
