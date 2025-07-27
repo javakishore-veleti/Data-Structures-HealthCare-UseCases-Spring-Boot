@@ -18,7 +18,6 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
     @Autowired
     private ProductFeatureDependencyRepository repository;
 
-
     /**
      Use Case: Enforce feature enablement order (e.g., pricing after base plan qualification).
      Algorithm: Topological Sort with methodType switch.
