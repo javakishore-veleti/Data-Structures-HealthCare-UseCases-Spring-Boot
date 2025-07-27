@@ -69,6 +69,11 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
         Map<String, List<String>> adjList = new HashMap<>();
 
         // inDegree: Count of incoming edges (prerequisites) for each node (feature).
+        /*
+        What is inDegree in a Graph?
+        In graph theory: inDegree of a node = number of edges coming into that node.
+        It tells you how many prerequisites that node (or feature) depends on.
+         */
         Map<String, Integer> inDegree = new HashMap<>();
 
         // Populates adjList with all edges: fromFeature → List of dependentFeatures.
@@ -115,6 +120,8 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
             resp.setMessage("Topological sort completed");
             resp.setResult(sortedOrder);
         }
+        resp.addResult("adjList", adjList);
+        resp.addResult("inDegree", inDegree);
     }
 
     /**

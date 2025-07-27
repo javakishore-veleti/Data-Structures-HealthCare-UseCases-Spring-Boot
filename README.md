@@ -93,6 +93,28 @@ All entities are managed via JPA, with a local H2 profile for development and Po
   - So it’s not sorting values, but sorting positions in a dependency chain. 
   - It’s also not unique — multiple valid topological orderings may exist.
 
+- What is inDegree in a Graph? 
+  - In graph theory: inDegree of a node = number of edges coming into that node. 
+  - It tells you how many prerequisites that node (or feature) depends on.
+  - Imagine each AWS product feature is a node.
+    - If you have: BASE_PLAN → PRICING, PRICING → FEATURE_A, FEATURE_A → FEATURE_B
+      - PRICING has inDegree 1 (because it depends on BASE_PLAN).
+      - FEATURE_A has inDegree 1 (because it depends on PRICING).
+      - FEATURE_B has inDegree 1 (because it depends on FEATURE_A).
+      - BASE_PLAN has inDegree 0 (no prerequisites).
+- Why Use inDegree in Topological Sort?
+  - Topological Sort (like Kahn’s algorithm) works like this:
+    - Start with all nodes that have inDegree == 0 → these have no prerequisites.
+    - Process them → remove their outgoing edges.
+    - Decrease inDegree of their dependent nodes.
+    - If any of those now have inDegree == 0, add them to the processing queue.
+    - This continues until:
+      - All nodes are sorted.
+      - Or a cycle is detected (i.e., some nodes never reach inDegree == 0).
+  - Real-World Analogy (AWS Feature Enablement)
+    - You can’t enable PRICING before BASE_PLAN → so PRICING has an inDegree of 1.
+    - Topological sort ensures you enable features in the correct order, obeying all such constraints.
+
 - Key Properties: 
 
 | Concept        | Explanation                                                                                                      |
