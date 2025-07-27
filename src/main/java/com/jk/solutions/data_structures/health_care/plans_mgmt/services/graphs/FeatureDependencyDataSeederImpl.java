@@ -30,33 +30,43 @@ public class FeatureDependencyDataSeederImpl implements FeatureDependencyDataSee
                     .withIgnoreEmptyLines()
                     .withTrim());
 
-            Map<String, List<String>> productToFeatures = new LinkedHashMap<>();
+            Map<String, LinkedHashSet<String>> productToOrderedFeatures = new LinkedHashMap<>();
 
             for (CSVRecord record : csvParser) {
                 String productId = record.get("product_id");
                 String feature = record.get("feature");
 
                 if (productId == null || feature == null) continue;
-                productToFeatures
-                        .computeIfAbsent(productId.trim(), k -> new ArrayList<>())
-                        .add(feature.trim());
 
-                if (productToFeatures.size() > maxRows) break;
+                productId = productId.trim();
+                feature = feature.trim();
+
+                productToOrderedFeatures
+                        .computeIfAbsent(productId, k -> new LinkedHashSet<>())
+                        .add(feature);
+
+                if (productToOrderedFeatures.size() > maxRows) break;
             }
 
             List<ProductFeatureDependency> dependencies = new ArrayList<>();
 
-            for (Map.Entry<String, List<String>> entry : productToFeatures.entrySet()) {
+            for (Map.Entry<String, LinkedHashSet<String>> entry : productToOrderedFeatures.entrySet()) {
                 String productId = entry.getKey();
-                List<String> features = entry.getValue();
+                List<String> features = new ArrayList<>(entry.getValue());
 
-                // Link each feature to the next feature sequentially
+                Set<String> seenEdges = new HashSet<>();
+
                 for (int i = 0; i < features.size() - 1; i++) {
-                    dependencies.add(new ProductFeatureDependency(
-                            productId,
-                            features.get(i),
-                            features.get(i + 1)
-                    ));
+                    String source = features.get(i);
+                    String target = features.get(i + 1);
+
+                    if (source.equals(target)) continue; // prevent self-loop
+
+                    String edgeKey = source + "->" + target;
+                    if (!seenEdges.contains(edgeKey)) {
+                        dependencies.add(new ProductFeatureDependency(productId, source, target));
+                        seenEdges.add(edgeKey); // track added edge
+                    }
                 }
             }
 

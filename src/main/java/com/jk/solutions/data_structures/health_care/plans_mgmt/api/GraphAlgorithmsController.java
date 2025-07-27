@@ -14,93 +14,92 @@ public class GraphAlgorithmsController {
     @Autowired
     private GraphDependencyService graphDependencyService;
 
-    @Autowired
-    private PlanTransitionService planTransitionService;
-
-    @Autowired
-    private QualificationGraphService qualificationGraphService;
-
-    @Autowired
-    private GeoConnectivityService geoConnectivityService;
-
-    @Autowired
-    private PlanUpgradePathService upgradePathService;
-
     /**
-     * Use Case: Enforce feature enablement order (e.g., pricing after base plan qualification).
+     * Use Case: Enforce feature enablement order (e.g., pricing after base plan).
      * Algorithm: Topological Sort
      */
-    @PostMapping("/topo-sort")
-    public ResponseEntity<DSAPatternResp> getFeatureEnablementOrder(@RequestBody DSAPatternReq req) {
+    @GetMapping("/topo-sort")
+    public ResponseEntity<DSAPatternResp> getTopologicalFeatureOrder(
+            @RequestParam("productId") String productId,
+            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
+
+        DSAPatternReq req = DSAPatternReq.builder().productId(productId).methodType(methodType).build();
         DSAPatternResp resp = new DSAPatternResp();
         graphDependencyService.topologicalSort(req, resp);
-
         return ResponseEntity.ok(resp);
     }
 
     /**
-     * Use Case: Determine connected qualification dependencies across multiple product features.
-     * Algorithm: DFS or BFS
+     * Use Case: Validate dependency rules between features.
+     * Algorithm: Graph Traversal (DFS or custom rules)
      */
-    @PostMapping("/qual-dependency")
-    public ResponseEntity<DSAPatternResp> exploreQualificationDependencies(@RequestBody DSAPatternReq req) {
-        DSAPatternResp resp = new DSAPatternResp();
-        qualificationGraphService.dfsOrBfsTraverse(req, resp);
-        return ResponseEntity.ok(resp);
-    }
+    @GetMapping("/dependency-validation")
+    public ResponseEntity<DSAPatternResp> validateFeatureDependencyRules(
+            @RequestParam("productId") String productId,
+            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
 
-    /**
-     * Use Case: Find optimal transition paths between plans based on eligibility or cost-efficiency.
-     * Algorithm: Dijkstra’s Algorithm
-     */
-    @PostMapping("/plan-transition")
-    public ResponseEntity<DSAPatternResp> getBestPlanTransitionPath(@RequestBody DSAPatternReq req) {
-        DSAPatternResp resp = new DSAPatternResp();
-        planTransitionService.findOptimalPath(req, resp);
-        return ResponseEntity.ok(resp);
-    }
-
-    /**
-     * Use Case: Cluster related plans or features with shared qualifications to identify isolated or core offerings.
-     * Algorithm: Union-Find (Disjoint Set)
-     */
-    @PostMapping("/group-qualified-plans")
-    public ResponseEntity<DSAPatternResp> getGroupedPlans(@RequestBody DSAPatternReq req) {
-        DSAPatternResp resp = new DSAPatternResp();
-        planTransitionService.clusterQualifiedPlans(req,resp);
-        return ResponseEntity.ok(resp);
-    }
-
-    /**
-     * Use Case: Analyze provider coverage or regional availability by traversing county/country-provider graphs.
-     * Algorithm: Graph Traversal (BFS)
-     */
-    @PostMapping("/geo-connectivity")
-    public ResponseEntity<DSAPatternResp> analyzeGeoConnectivity(@RequestBody DSAPatternReq req) {
-        DSAPatternResp resp = new DSAPatternResp();
-        geoConnectivityService.analyzeCoverageGraph(req, resp);
-        return ResponseEntity.ok(resp);
-    }
-
-    /**
-     * Use Case: Model and validate upgrade chains among tiered insurance plans.
-     * Algorithm: BFS or DFS
-     */
-    @PostMapping("/upgrade-path")
-    public ResponseEntity<DSAPatternResp> getUpgradePaths(@RequestBody DSAPatternReq req) {
-        DSAPatternResp resp = new DSAPatternResp();
-        upgradePathService.evaluateUpgradeChains(req,resp);
-        return ResponseEntity.ok(resp);
-    }
-
-    /**
-     * Use Case: Validate correct enablement sequence of products/features based on business rules.
-     * Algorithm: Dependency Graph
-     */
-    @PostMapping("/dependency-validate")
-    public ResponseEntity<DSAPatternResp> validateDependencyGraph(@RequestBody DSAPatternReq req) {
+        DSAPatternReq req = DSAPatternReq.builder().productId(productId).methodType(methodType).build();
         DSAPatternResp resp = new DSAPatternResp();
         graphDependencyService.validateDependencyRules(req, resp);
+        return ResponseEntity.ok(resp);
+    }
+
+    /**
+     * Use Case: Discover qualification dependency paths.
+     * Algorithm: BFS / DFS
+     */
+    @GetMapping("/traverse-qualifications")
+    public ResponseEntity<DSAPatternResp> traverseQualificationGraph(
+            @RequestParam("productId") String productId,
+            @RequestParam("startFeature") String startFeature,
+            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
+
+        DSAPatternReq req = DSAPatternReq.builder()
+                .productId(productId)
+                .windowSize(0) // reuse field if needed
+                .methodType(methodType)
+                .build();
+
+        DSAPatternResp resp = new DSAPatternResp();
+        graphDependencyService.traverseQualificationsDFSorBFS(req, startFeature, resp);
+        return ResponseEntity.ok(resp);
+    }
+
+    /**
+     * Use Case: Cluster related plans by shared dependencies.
+     * Algorithm: Union-Find (Disjoint Sets)
+     */
+    @GetMapping("/union-find-clustering")
+    public ResponseEntity<DSAPatternResp> clusterPlansUsingUnionFind(
+            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
+
+        DSAPatternReq req = DSAPatternReq.builder()
+                .methodType(methodType)
+                .build();
+
+        DSAPatternResp resp = new DSAPatternResp();
+        graphDependencyService.clusterPlansUnionFind(req, resp);
+        return ResponseEntity.ok(resp);
+    }
+
+    /**
+     * Use Case: Suggest valid plan upgrade paths.
+     * Algorithm: BFS / DFS
+     */
+    @GetMapping("/plan-upgrade-paths")
+    public ResponseEntity<DSAPatternResp> getPlanUpgradePaths(
+            @RequestParam("accountNbr") String accountNbr,
+            @RequestParam("currentPlan") String currentPlan,
+            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
+
+        DSAPatternReq req = DSAPatternReq.builder()
+                .accountNbr(accountNbr)
+                .methodType(methodType)
+                .currentPlan(currentPlan)
+                .build();
+
+        DSAPatternResp resp = new DSAPatternResp();
+        graphDependencyService.computeUpgradePaths(req, resp);
         return ResponseEntity.ok(resp);
     }
 }
