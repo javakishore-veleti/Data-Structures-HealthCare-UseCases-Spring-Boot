@@ -77,6 +77,42 @@ All entities are managed via JPA, with a local H2 profile for development and Po
 |                              | Masking                                 | Bitmask permissions (e.g., eligibility criteria combinations)                               |
 |                              | AND / OR / NOT operations               | Apply logic filters across product features or account rules                                |
 
+
+### What is “Topological Sort”?
+- Topological sort is an algorithm that orders nodes of a Directed Acyclic Graph (DAG) such that for every directed edge U → V, node U comes before V in the ordering.
+- Think of it as : Sort tasks based on their dependencies.
+- Real-World Analogy (especially for this healthcare or AWS Services test data use case (look at CSV file in src/main/resources folder)):
+  - Imagine you’re deploying AWS services, but:
+    - IAM must be set up before EC2, 
+    - EC2 must be enabled before you attach EBS, 
+    - EBS must be attached before backups start. 
+    - Topological sort will give you an order like: IAM → EC2 → EBS → Backup
+    - So you never try to enable something before its prerequisites are satisfied.
+- Why is it called a “Sort”?
+  - In typical sorting, you order items by magnitude or priority (like numbers or strings). In topological sort, you’re ordering by dependency — who needs to come before whom. 
+  - So it’s not sorting values, but sorting positions in a dependency chain. 
+  - It’s also not unique — multiple valid topological orderings may exist.
+
+- Key Properties: 
+
+| Concept        | Explanation                                                                                                      |
+| -------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Applies To** | Directed Acyclic Graphs (DAGs) only                                                                              |
+| **Input**      | Nodes and directed edges (dependencies)                                                                          |
+| **Output**     | A linear ordering of nodes respecting dependency constraints                                                     |
+| **Use Cases**  | Build systems (Maven, Gradle), CI/CD pipelines, feature enablement, course prerequisite planning, job scheduling |
+
+- How It Relates to This Code 
+  - In GraphDependencyServiceImpl:
+    - We collected the dependency edges for a product (e.g., IAM → EC2), 
+    - Built an adjacency list + in-degree map, 
+    - Ran Kahn's algorithm to return a valid topological ordering.
+    
+- What Happens If There’s a Cycle? 
+  - Topological sorting fails — because there's no valid linear order to satisfy circular dependencies. 
+  - That’s why  resp.setMessage("Cycle detected...") is triggered when bad data sneaks in.
+
+
 ## Tech Stack
 
 - Java 21 and Spring Boot 3.2
