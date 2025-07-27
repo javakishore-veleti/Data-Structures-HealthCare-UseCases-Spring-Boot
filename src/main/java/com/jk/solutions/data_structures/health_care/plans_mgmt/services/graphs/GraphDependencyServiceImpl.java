@@ -276,6 +276,60 @@ public class GraphDependencyServiceImpl implements GraphDependencyService {
     @Override
     public void traverseQualificationsDFSorBFS(DSAPatternReq req, String startFeature, DSAPatternResp resp) {
 
+        String productId = req.getProductId();
+        String methodType = req.getMethodType();
+
+        List<ProductFeatureDependency> edges = repository.findByProductId(productId);
+
+        if (ObjectUtils.isEmpty(edges)) {
+            resp.setMessage("No dependencies found for productId: " + productId);
+            return;
+        }
+
+        // Build adjacency list
+        Map<String, List<String>> adjList = new HashMap<>();
+        for (ProductFeatureDependency edge : edges) {
+            adjList.computeIfAbsent(edge.getSourceFeatureCode(), k -> new ArrayList<>())
+                    .add(edge.getDependentFeatureCode());
+        }
+
+        Set<String> visited = new LinkedHashSet<>();
+
+        if ("dfs".equalsIgnoreCase(methodType)) {
+            dfsTraversal(startFeature, adjList, visited);
+            resp.setMessage("Traversed using DFS");
+        } else if ("bfs".equalsIgnoreCase(methodType)) {
+            bfsTraversal(startFeature, adjList, visited);
+            resp.setMessage("Traversed using BFS");
+        } else {
+            resp.setMessage("Unsupported methodType: " + methodType + " (expected: dfs or bfs)");
+            return;
+        }
+
+        resp.setResult(new ArrayList<>(visited));
+
+    }
+
+    private void dfsTraversal(String feature, Map<String, List<String>> adjList, Set<String> visited) {
+        if (!visited.add(feature)) return;
+        for (String neighbor : adjList.getOrDefault(feature, Collections.emptyList())) {
+            dfsTraversal(neighbor, adjList, visited);
+        }
+    }
+
+    private void bfsTraversal(String start, Map<String, List<String>> adjList, Set<String> visited) {
+        Queue<String> queue = new ArrayDeque<>();
+        queue.add(start);
+        visited.add(start);
+
+        while (!queue.isEmpty()) {
+            String current = queue.poll();
+            for (String neighbor : adjList.getOrDefault(current, Collections.emptyList())) {
+                if (visited.add(neighbor)) {
+                    queue.add(neighbor);
+                }
+            }
+        }
     }
 
     /*

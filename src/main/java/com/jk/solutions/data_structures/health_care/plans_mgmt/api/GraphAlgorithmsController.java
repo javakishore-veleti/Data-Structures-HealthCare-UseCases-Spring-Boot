@@ -47,12 +47,14 @@ public class GraphAlgorithmsController {
     /**
      * Use Case: Discover qualification dependency paths.
      * Algorithm: BFS / DFS
+     * methodType - dfs / standard /
+     * startFeature - Serverless computing
      */
     @GetMapping("/traverse-qualifications")
     public ResponseEntity<DSAPatternResp> traverseQualificationGraph(
-            @RequestParam("productId") String productId,
-            @RequestParam("startFeature") String startFeature,
-            @RequestParam(name = "methodType", defaultValue = "standard") String methodType) {
+            @RequestParam(value = "productId", defaultValue = "Lambda") String productId,
+            @RequestParam(value = "startFeature", defaultValue = "Serverless computing") String startFeature,
+            @RequestParam(name = "methodType", defaultValue = "dfs") String methodType) {
 
         DSAPatternReq req = DSAPatternReq.builder()
                 .productId(productId)
