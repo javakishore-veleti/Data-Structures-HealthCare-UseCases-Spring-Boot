@@ -3,12 +3,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "product_feature_dependency")
 @Getter
 @Setter
+@NoArgsConstructor
 public class ProductFeatureDependency extends BaseEntity {
 
     @Column(name = "source_feature_code", nullable = false)
@@ -19,4 +21,10 @@ public class ProductFeatureDependency extends BaseEntity {
 
     @Column(name = "product_id", nullable = false)
     private String productId;
+
+    public ProductFeatureDependency(String productId, String fromFeature, String toFeature) {
+        this.productId = productId;
+        this.sourceFeatureCode = fromFeature;
+        this.dependentFeatureCode = toFeature;
+    }
 }

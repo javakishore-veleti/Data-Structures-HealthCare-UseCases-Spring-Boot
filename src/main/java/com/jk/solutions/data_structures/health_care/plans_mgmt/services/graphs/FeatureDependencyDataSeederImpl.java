@@ -2,56 +2,69 @@ package com.jk.solutions.data_structures.health_care.plans_mgmt.services.graphs;
 
 import com.jk.solutions.data_structures.health_care.plans_mgmt.entity.ProductFeatureDependency;
 import com.jk.solutions.data_structures.health_care.plans_mgmt.repository.ProductFeatureDependencyRepository;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.*;
 
 @Component
-public class FeatureDependencyDataSeederImpl implements FeatureDependencyDataSeeder{
+public class FeatureDependencyDataSeederImpl implements FeatureDependencyDataSeeder {
 
     @Autowired
     private ProductFeatureDependencyRepository repository;
 
+    @SuppressWarnings({"CallToPrintStackTrace", "deprecation"})
     @Override
-    public String populateFeatureDependencies(int numProducts, int avgEdgesPerProduct) {
-        List<String> awsFeatures = List.of(
-                "IAM", "EC2", "S3", "Athena", "ECS", "Fargate", "EKS", "QuickSight",
-                "CloudWatch", "VPC", "RDS", "Lambda", "DynamoDB", "SNS", "SQS", "StepFunctions"
-        );
+    public String populateFeatureDependencies(int maxRows, int unusedEdgeFactor) {
+        try {
+            Reader reader = new InputStreamReader(new ClassPathResource(
+                    "Extended_AWS_Service_Feature_Matrix__500_Rows_.csv").getInputStream());
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+                    .withFirstRecordAsHeader()
+                    .withIgnoreEmptyLines()
+                    .withTrim());
 
-        List<ProductFeatureDependency> allDeps = new ArrayList<>();
+            Map<String, List<String>> productToFeatures = new LinkedHashMap<>();
 
-        for (int i = 1; i <= numProducts; i++) {
-            String productId = "AWS_PROD_" + i;
+            for (CSVRecord record : csvParser) {
+                String productId = record.get("product_id");
+                String feature = record.get("feature");
 
-            for (int j = 0; j < avgEdgesPerProduct; j++) {
-                String source = awsFeatures.get(ThreadLocalRandom.current().nextInt(awsFeatures.size()));
-                String target = awsFeatures.get(ThreadLocalRandom.current().nextInt(awsFeatures.size()));
+                if (productId == null || feature == null) continue;
+                productToFeatures
+                        .computeIfAbsent(productId.trim(), k -> new ArrayList<>())
+                        .add(feature.trim());
 
-                // Avoid self-dependency and duplicate source-target
-                if (!source.equals(target)) {
-                    ProductFeatureDependency dep = new ProductFeatureDependency();
-                    dep.setId(UUID.randomUUID().toString());
-                    dep.setProductId(productId);
-                    dep.setSourceFeatureCode(source);
-                    dep.setDependentFeatureCode(target);
-                    dep.setCreatedAt(LocalDateTime.now());
-                    dep.setCreatedBy("DataSeeder");
-                    dep.setUpdatedAt(LocalDateTime.now());
-                    dep.setUpdatedBy("DataSeeder");
+                if (productToFeatures.size() > maxRows) break;
+            }
 
-                    allDeps.add(dep);
+            List<ProductFeatureDependency> dependencies = new ArrayList<>();
+
+            for (Map.Entry<String, List<String>> entry : productToFeatures.entrySet()) {
+                String productId = entry.getKey();
+                List<String> features = entry.getValue();
+
+                // Link each feature to the next feature sequentially
+                for (int i = 0; i < features.size() - 1; i++) {
+                    dependencies.add(new ProductFeatureDependency(
+                            productId,
+                            features.get(i),
+                            features.get(i + 1)
+                    ));
                 }
             }
+
+            repository.saveAll(dependencies);
+            return "Saved " + dependencies.size() + " product-feature dependency rows.";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error while populating dependencies: " + e.getMessage();
         }
-
-        repository.saveAll(allDeps);
-
-        return "Inserted " + allDeps.size() + " ProductFeatureDependency records for " + numProducts + " products.";
     }
 }

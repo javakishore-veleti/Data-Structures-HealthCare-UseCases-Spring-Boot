@@ -1,0 +1,501 @@
+product_id,category,feature
+EC2,Compute,Scalable virtual servers
+EC2,Compute,"On-demand, spot, and reserved instances"
+EC2,Compute,Auto Scaling support
+EC2,Compute,Integrated security groups
+EC2,Compute,Custom networking with VPC
+Lambda,Compute,Serverless computing
+Lambda,Compute,Event-driven code execution
+Lambda,Compute,Auto-scaling
+Lambda,Compute,Subsecond billing
+Lambda,Compute,Integration with other AWS services
+S3,Storage,Scalable object storage
+S3,Storage,11 9’s durability
+S3,Storage,Access controls and encryption
+S3,Storage,Integration with other AWS services
+S3,Storage,Used for data lakes and backups
+RDS,Database,Managed relational databases
+RDS,Database,Multi-AZ deployments
+RDS,Database,Read replicas
+RDS,Database,Storage autoscaling
+RDS,Database,Automated backups and patching
+DynamoDB,Database,Fully managed NoSQL database
+DynamoDB,Database,Millisecond latency
+DynamoDB,Database,Backup and restore
+DynamoDB,Database,Event-driven with Streams
+DynamoDB,Database,Auto partitioning and scaling
+IAM,Security,User and permissions management
+IAM,Security,Granular access control
+IAM,Security,Identity federation
+IAM,Security,Multi-factor authentication
+IAM,Security,Integrated with all AWS services
+CloudWatch,Management,Metrics and alarms
+CloudWatch,Management,Dashboard visualization
+CloudWatch,Management,Log aggregation
+CloudWatch,Management,Monitoring AWS resources
+CloudWatch,Management,Automated response triggers
+SageMaker,Machine Learning,Build/train/deploy ML models
+SageMaker,Machine Learning,Managed Jupyter notebooks
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks
+SageMaker,Machine Learning,Model tuning and monitoring
+SageMaker,Machine Learning,Real-time predictions
+VPC,Networking,Logically isolated network
+VPC,Networking,Custom IP addressing
+VPC,Networking,Subnets and route tables
+VPC,Networking,Security groups and NACLs
+VPC,Networking,Peering and VPN support
+QuickSight,Analytics,BI dashboards and visualization
+QuickSight,Analytics,Natural language query support
+QuickSight,Analytics,Embedded analytics
+QuickSight,Analytics,Third-party data integration
+QuickSight,Analytics,Enterprise-grade security
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads
+EC2,Compute,Scalable virtual servers - used in compute workloads
+EC2,Compute,"On-demand, spot, and reserved instances - used in compute workloads"
+EC2,Compute,Auto Scaling support - used in compute workloads
+EC2,Compute,Integrated security groups - used in compute workloads
+EC2,Compute,Custom networking with VPC - used in compute workloads
+Lambda,Compute,Serverless computing - used in compute workloads
+Lambda,Compute,Event-driven code execution - used in compute workloads
+Lambda,Compute,Auto-scaling - used in compute workloads
+Lambda,Compute,Subsecond billing - used in compute workloads
+Lambda,Compute,Integration with other AWS services - used in compute workloads
+S3,Storage,Scalable object storage - used in storage workloads
+S3,Storage,11 9’s durability - used in storage workloads
+S3,Storage,Access controls and encryption - used in storage workloads
+S3,Storage,Integration with other AWS services - used in storage workloads
+S3,Storage,Used for data lakes and backups - used in storage workloads
+RDS,Database,Managed relational databases - used in database workloads
+RDS,Database,Multi-AZ deployments - used in database workloads
+RDS,Database,Read replicas - used in database workloads
+RDS,Database,Storage autoscaling - used in database workloads
+RDS,Database,Automated backups and patching - used in database workloads
+DynamoDB,Database,Fully managed NoSQL database - used in database workloads
+DynamoDB,Database,Millisecond latency - used in database workloads
+DynamoDB,Database,Backup and restore - used in database workloads
+DynamoDB,Database,Event-driven with Streams - used in database workloads
+DynamoDB,Database,Auto partitioning and scaling - used in database workloads
+IAM,Security,User and permissions management - used in security workloads
+IAM,Security,Granular access control - used in security workloads
+IAM,Security,Identity federation - used in security workloads
+IAM,Security,Multi-factor authentication - used in security workloads
+IAM,Security,Integrated with all AWS services - used in security workloads
+CloudWatch,Management,Metrics and alarms - used in management workloads
+CloudWatch,Management,Dashboard visualization - used in management workloads
+CloudWatch,Management,Log aggregation - used in management workloads
+CloudWatch,Management,Monitoring AWS resources - used in management workloads
+CloudWatch,Management,Automated response triggers - used in management workloads
+SageMaker,Machine Learning,Build/train/deploy ML models - used in machine learning workloads
+SageMaker,Machine Learning,Managed Jupyter notebooks - used in machine learning workloads
+SageMaker,Machine Learning,Inbuilt algorithms and frameworks - used in machine learning workloads
+SageMaker,Machine Learning,Model tuning and monitoring - used in machine learning workloads
+SageMaker,Machine Learning,Real-time predictions - used in machine learning workloads
+VPC,Networking,Logically isolated network - used in networking workloads
+VPC,Networking,Custom IP addressing - used in networking workloads
+VPC,Networking,Subnets and route tables - used in networking workloads
+VPC,Networking,Security groups and NACLs - used in networking workloads
+VPC,Networking,Peering and VPN support - used in networking workloads
+QuickSight,Analytics,BI dashboards and visualization - used in analytics workloads
+QuickSight,Analytics,Natural language query support - used in analytics workloads
+QuickSight,Analytics,Embedded analytics - used in analytics workloads
+QuickSight,Analytics,Third-party data integration - used in analytics workloads
+QuickSight,Analytics,Enterprise-grade security - used in analytics workloads

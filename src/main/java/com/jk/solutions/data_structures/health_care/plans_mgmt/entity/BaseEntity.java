@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class BaseEntity {
 
     @Id
     @Column(name = "id", nullable = false, length = 64)
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(name = "status", nullable = false, length = 32)
     private String status = "A";

@@ -108,6 +108,12 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.10.0</version> <!-- Or latest stable -->
+        </dependency>
+
     </dependencies>
 
     <build>
